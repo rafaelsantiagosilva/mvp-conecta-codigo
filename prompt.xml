@@ -1,0 +1,98 @@
+<papel>
+Você é um desenvolvedor front-end sênior e também professor de Matemática com experiência em questões do ENEM. Você escreve código simples, legível e sem dependências desnecessárias, e confere cada resposta matemática antes de entregá-la.
+</papel>
+<contexto>
+Estou criando o "Conecta Código", um app gamificado (estilo Duolingo) de revisão de Matemática para vestibulandos, focado no ENEM. O app completo teria: questões por tema, ofensiva de dias, ranking entre amigos e pontuação. Agora preciso apenas de um MVP para validar a função principal: resolver questões. Ele será mostrado a professores, mentores e potenciais usuários, principalmente no celular.
+</contexto>
+<tarefa>
+Construa o MVP descrito abaixo como um site 100% client-side (sem backend, sem banco de dados, sem login real), pensado primeiro para celular (mobile-first, funcional a partir de 360 px de largura) e que também funcione bem no desktop.
+</tarefa>
+<decisoes_tecnicas>
+- Entregue um único arquivo `index.html` com HTML, CSS e JavaScript puro (vanilla), sem build e sem frameworks. Motivo: o deploy deve ser simples (GitHub Pages, Netlify ou Vercel, arrastando o arquivo).
+- Não use bibliotecas externas além, no máximo, de fontes do Google Fonts (com fallback). Fórmulas devem usar Unicode e `
+    <sup>`/`
+        <sub>`.
+- Nunca use `eval()` nem `new Function()` na calculadora. Escreva um parser de expressões próprio (por exemplo, shunting-yard ou descida recursiva).
+- Para guardar o nome do usuário, use `localStorage` dentro de `try/catch`, com fallback em memória.
+- Separe o código em seções comentadas: dados (questões), estado, telas (renderização), calculadora e utilitários.
+
+        </decisoes_tecnicas>
+        <escopo>
+Dentro do MVP:
+1. Login simples: um campo para o nome e um botão "Entrar". Valide para impedir nome vazio.
+2. Home: saudação com o nome e 4 botões de tema: Funções, Geometria, Probabilidade e Álgebra.
+3. Simulado por tema: 5 questões por tema (20 no total), mostradas uma por vez, com barra de progresso (ex.: "2 de 5").
+4. Questões de múltipla escolha (alternativas A a E), estilo ENEM.
+5. Recap ao final de cada simulado:
+   - número de acertos e de erros;
+   - uma lista expansível (acordeão) de todas as questões, mostrando o enunciado, a resposta do usuário, a resposta correta e a explicação da resolução;
+   - botões "Tentar de novo" (reinicia o mesmo tema com o estado zerado) e "Voltar para a home".
+6. Calculadora e anotações em cada questão (recurso mais importante do MVP):
+   - Durante a questão, um botão alterna entre as duas áreas: "Questão" e "Calculadora".
+   - Calculadora estilo científica, com: + − × ÷, potência (^), raiz quadrada, fatorial (!), log (base 10), ln, parênteses, vírgula decimal, π, sen/cos/tan (em graus), apagar um caractere (⌫) e limpar tudo (C). Exiba a expressão e o resultado. Trate erros (divisão por zero, parênteses não fechados, entrada inválida) com uma mensagem amigável, sem quebrar a página.
+   - Abaixo da calculadora, um bloco de anotações (textarea) do próprio usuário.
+   - Cada questão tem a sua própria calculadora e as suas próprias anotações, que começam sempre LIMPAS. Enquanto o usuário estiver naquela questão, alternar entre "Questão" e "Calculadora" não apaga nada. Ao avançar para outra questão ou ao clicar em "Tentar de novo", tudo é zerado.
+
+Fora do MVP (não implemente): ofensiva de dias, amigos, ranking, pontuação global, cadastro com senha, persistência do progresso, anúncios e planos premium.
+</escopo>
+        <banco_de_questoes>
+Crie as 20 questões originais (não copie questões reais do ENEM). Cada uma deve ter:
+- situação-problema curta e contextualizada (cotidiano, finanças, construção, saúde, tecnologia...), que exija aplicar fórmulas ou raciocínio lógico, com nível de dificuldade de fácil a médio;
+- 5 alternativas, com distratores plausíveis (erros comuns de cálculo ou de interpretação);
+- gabarito (apenas uma alternativa correta);
+- explicação da resolução, passo a passo e curta.
+
+Distribuição sugerida de conteúdos:
+- Funções: função afim, quadrática, interpretação de gráfico/tabela, taxa de variação.
+- Geometria: áreas, volumes, Pitágoras, semelhança, escala.
+- Probabilidade: probabilidade simples, eventos complementares, contagem básica, média/mediana.
+- Álgebra: porcentagem, regra de três, equações e sistemas, juros simples e compostos.
+
+Guarde as questões em uma constante JavaScript neste formato (exemplo do formato, não do conteúdo):
+
+```js
+const QUESTOES = {
+  algebra: [
+    {
+      enunciado: "Uma loja anuncia 20% de desconto em um produto de R$ 150,00. Qual o preço final?",
+      alternativas: ["R$ 100,00", "R$ 110,00", "R$ 120,00", "R$ 130,00", "R$ 135,00"],
+      correta: 2,
+      explicacao: "Desconto = 0,20 × 150 = 30. Preço final = 150 − 30 = R$ 120,00."
+    }
+  ],
+  // funcoes, geometria, probabilidade...
+};
+```
+
+Antes de finalizar, resolva você mesmo cada questão, confirme se o gabarito está certo e se existe apenas uma alternativa correta. Os resultados da calculadora também precisam estar corretos (teste ao menos: 2+3×4, (2+3)×4, 2^10, √144, 5!, log(1000), sen(30) e 10÷0).
+</banco_de_questoes>
+        <design>
+Eu vou anexar 3 imagens de referência. Analise-as antes de escrever o código e extraia delas: paleta, tipografia, raio de borda, sombras, espaçamentos e estilo dos botões.
+- `conectacodigo-design-app3.png`: referência de estilo visual das telas de questão (chamativo, vibrante, com personalidade). Siga esse estilo, mas troque a cor primária por um tom de azul (azul vivo, que remeta a Matemática).
+- `conectacodigo-design-app1.png`: referência para os menus (login e home, com os botões de tema).
+- `conectacodigo-design-app2.png`: referência para o layout/estrutura da tela de questão (posição do enunciado, das alternativas, da barra de progresso e dos botões).
+Defina as cores como variáveis CSS (`:root`). Dê feedback visual claro ao selecionar uma alternativa e ao mostrar acerto (verde) e erro (vermelho). Use alvos de toque de pelo menos 44 px e contraste adequado.
+Se alguma imagem não aparecer na conversa, avise e peça o reenvio antes de codificar o design, em vez de inventar.
+</design>
+        <fluxo_de_trabalho>
+1. Resuma em até 8 linhas o que você entendeu do design (a partir das imagens) e liste quaisquer suposições que fizer.
+2. Defina rapidamente a estrutura: telas, estado e funções principais.
+3. Escreva o `index.html` completo.
+4. Revise: execute mentalmente o fluxo (login → home → simulado → calculadora → recap → tentar de novo/home) e confira o gabarito de todas as questões.
+5. Entregue o resultado.
+Se algo for ambíguo, escolha a opção mais simples, anote-a como suposição e siga em frente. Não pare para me perguntar, a menos que falte algum insumo essencial (por exemplo, as imagens).
+</fluxo_de_trabalho>
+        <criterios_de_aceite>
+- Abre direto no navegador, sem instalar nada e sem internet (exceto fontes, que têm fallback).
+- Fluxo completo funcionando sem erros no console.
+- Layout sem rolagem horizontal em 360 px de largura.
+- 20 questões com gabaritos corretos e explicações.
+- Calculadora sem `eval` e com tratamento de erros.
+- Calculadora e anotações zeradas a cada nova questão e a cada "Tentar de novo".
+- Visual fiel às referências, com azul como cor primária.
+</criterios_de_aceite>
+        <formato_de_saida>
+1. O arquivo `index.html` completo.
+2. Em seguida, em no máximo 10 linhas: como fazer o deploy gratuito (passo a passo curto), as suposições que você adotou e 3 sugestões de próximos passos para evoluir o MVP (por exemplo, ofensiva e amigos).
+Não repita o código fora do arquivo.
+</formato_de_saida>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conecta Código — Matemática para o ENEM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#1f5cff;--blue-d:#1038b8;--navy:#0a1f5c;--sky:#e6efff;--line:#c9d8ff;--cream:#f5f1e3;--orange:#ff5a1f;--ink:#111;--ok:#15803d;--okbg:#dcfce7;--bad:#b91c1c;--badbg:#fee2e2}
+*{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
+body{font-family:Nunito,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--cream);min-height:100vh;font-size:16px;line-height:1.4}
+body.q{background:linear-gradient(#d6e5ff,#f3f7ff 55%,#cfe0ff) fixed}
+#app{max-width:520px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:14px;min-height:100vh}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+h1{font-size:30px;font-weight:900}h2{font-size:22px;font-weight:900}
+.c{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;padding-top:8px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.btn{min-height:54px;width:100%;border:3px solid var(--ink);border-radius:18px;background:var(--blue);color:#fff;font-weight:900;font-size:18px;box-shadow:0 5px 0 var(--ink);padding:0 20px}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.btn.or{background:var(--orange)}.btn.gh{background:#fff;color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+body.q .btn{border:0;border-radius:999px;box-shadow:0 5px 0 var(--blue-d)}
+body.q .btn.or{box-shadow:0 5px 0 #b13300}
+body.q .btn.gh{border:2px solid var(--blue);box-shadow:0 5px 0 var(--line);color:var(--blue)}
+.ib{flex:none;width:46px;height:46px;border:3px solid var(--ink);border-radius:14px;background:var(--orange);color:#fff;font-size:22px;font-weight:900;box-shadow:0 3px 0 var(--ink)}
+body.q .ib{border:0;border-radius:50%;background:#fff;color:var(--blue);box-shadow:0 4px 14px rgba(16,56,184,.2)}
+.card{background:#fff;border:3px solid var(--ink);border-radius:24px;box-shadow:0 6px 0 var(--ink);padding:18px;display:flex;flex-direction:column;gap:12px}
+body.q .card{border:0;box-shadow:0 8px 24px rgba(16,56,184,.15)}
+label{font-weight:800}
+input{min-height:50px;border:3px solid var(--ink);border-radius:14px;padding:0 14px;background:var(--cream);width:100%;font-size:18px}
+.err{color:var(--bad);font-weight:800;min-height:1.3em}
+.lst{padding:0;overflow:hidden}
+.tm{display:flex;align-items:center;gap:14px;width:100%;min-height:76px;padding:12px 16px;background:#fff;border:0;border-bottom:3px solid var(--ink);text-align:left}
+.tm:last-child{border-bottom:0}.tm:active{background:var(--sky)}
+.tm .ic{flex:none;width:52px;height:52px;border:3px solid var(--ink);border-radius:14px;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:900;font-size:15px}
+.tm b{display:block;font-size:18px}.tm small{font-weight:600;color:#444}.tm i{margin-left:auto;font-size:26px;font-style:normal;font-weight:900}
+.cnt{font-weight:900;color:var(--blue);min-width:52px;text-align:right}
+.bar{height:12px;background:#fff;border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--orange);border-radius:9px;transition:width .3s}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:#fff;border-radius:999px;padding:4px}
+.seg button{min-height:44px;border:0;border-radius:999px;background:none;font-weight:900;color:var(--blue)}
+.seg button.on{background:var(--blue);color:#fff}
+.tag{align-self:flex-start;background:#ffe3d6;color:#a63200;font-weight:900;border-radius:999px;padding:4px 14px;font-size:14px}
+.enun{font-size:18px;font-weight:700}
+.alts{display:flex;flex-direction:column;gap:10px}
+.alt{display:flex;gap:12px;align-items:center;text-align:left;width:100%;min-height:54px;padding:8px 14px;background:#fff;border:2px solid var(--line);border-radius:18px;font-weight:700}
+.alt b{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--sky);color:var(--blue)}
+.alt.on{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 4px 0 var(--blue-d)}.alt.on b{background:#fff}
+.disp{background:var(--navy);color:#fff;border-radius:22px;padding:14px 16px;text-align:right;min-height:96px;display:flex;flex-direction:column;justify-content:space-between;gap:6px}
+#ce{font-size:20px;opacity:.85;word-break:break-all;min-height:1.4em}
+#cr{font-size:30px;font-weight:900;word-break:break-word;min-height:1.3em}#cr.bad{font-size:16px;color:#ffb4a8}
+.keys{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.keys button{min-height:48px;border:0;border-radius:14px;background:#fff;font-size:18px;font-weight:800;box-shadow:0 3px 0 var(--line)}
+.keys .f{background:var(--sky);color:var(--blue)}.keys .o{background:#cfdcff;color:var(--navy)}
+.keys .eq{grid-column:span 2;background:var(--orange);color:#fff;box-shadow:0 3px 0 #b13300}
+.keys button:active{transform:translateY(2px)}
+textarea{width:100%;min-height:120px;border:2px solid var(--line);border-radius:16px;padding:12px;resize:vertical;background:#fff}
+.nt{font-weight:900;color:var(--navy);display:block;margin-bottom:6px}
+.sc{background:var(--navy);color:#fff;border-radius:26px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.ring{width:128px;height:128px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--orange) calc(var(--p)*1%),rgba(255,255,255,.22) 0)}
+.ring div{width:98px;height:98px;border-radius:50%;background:#fff;color:var(--navy);display:grid;place-items:center;font-size:30px;font-weight:900}
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%}
+.st span{background:rgba(255,255,255,.12);border-radius:14px;padding:8px 4px;font-size:13px}.st b{display:block;font-size:22px}
+details{background:#fff;border-radius:18px;box-shadow:0 4px 14px rgba(16,56,184,.12);border-left:8px solid var(--bad)}
+details.ok{border-left-color:var(--ok)}
+summary{list-style:none;display:flex;align-items:center;gap:10px;min-height:52px;padding:8px 14px;font-weight:900;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary .v{margin-left:auto;font-size:14px;padding:3px 10px;border-radius:999px;background:var(--badbg);color:var(--bad)}
+details.ok .v{background:var(--okbg);color:var(--ok)}
+.bd{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px}
+.bd .a{padding:8px 12px;border-radius:12px;font-weight:700}.a.u{background:var(--badbg)}.a.u.ok,.a.k{background:var(--okbg)}
+.bd .x{background:var(--sky);padding:10px 12px;border-radius:12px}
+.gap{margin-top:auto;display:flex;flex-direction:column;gap:12px;padding-bottom:6px}
+@media(max-width:380px){h1{font-size:26px}.keys{gap:6px}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+/* ===================== 1. DADOS (questões) ===================== */
+const TEMAS = {
+  funcoes:{nome:"Funções",ic:"ƒ(x)",sub:"Afim, quadrática e gráficos"},
+  geometria:{nome:"Geometria",ic:"△",sub:"Áreas, volumes e Pitágoras"},
+  probabilidade:{nome:"Probabilidade",ic:"P(A)",sub:"Chances, contagem e média"},
+  algebra:{nome:"Álgebra",ic:"x+y",sub:"Porcentagem, juros e sistemas"}
+};
+const QUESTOES = {
+  funcoes:[
+    {enunciado:"Uma corrida de táxi custa R$ 5,00 de bandeirada mais R$ 2,50 por quilômetro rodado. Qual o valor de uma corrida de 12 km?",
+     alternativas:["R$ 30,00","R$ 32,50","R$ 35,00","R$ 36,00","R$ 17,00"],correta:2,
+     explicacao:"C(x) = 5 + 2,5x. Para x = 12: 5 + 2,5 × 12 = 5 + 30 = R$ 35,00."},
+    {enunciado:"Uma bola é chutada e sua altura, em metros, após t segundos é h(t) = −5t² + 20t. Qual a altura máxima atingida?",
+     alternativas:["10 m","15 m","20 m","25 m","40 m"],correta:2,
+     explicacao:"O máximo está no vértice: t = −b/2a = −20/(−10) = 2 s. h(2) = −5·4 + 40 = 20 m."},
+    {enunciado:"Um reservatório tinha 800 L às 8h e 500 L às 11h, esvaziando em ritmo constante. A que horas ficará vazio?",
+     alternativas:["14h","15h","16h","17h","18h"],correta:2,
+     explicacao:"Taxa = (500 − 800) ÷ 3 = −100 L/h. Faltam 500 ÷ 100 = 5 h depois das 11h, ou seja, 16h."},
+    {enunciado:"Um vendedor recebe salário fixo de R$ 1.200,00 mais 5% do que vender no mês. Quanto precisa vender para receber R$ 2.000,00?",
+     alternativas:["R$ 4.000,00","R$ 8.000,00","R$ 40.000,00","R$ 16.000,00","R$ 160.000,00"],correta:3,
+     explicacao:"1200 + 0,05v = 2000 → 0,05v = 800 → v = 800 ÷ 0,05 = R$ 16.000,00."},
+    {enunciado:"O lucro de uma fábrica, em milhares de reais, é L(x) = −x² + 10x − 16, com x em centenas de peças produzidas. Para quais valores de x o lucro é positivo?",
+     alternativas:["x &lt; 2 ou x &gt; 8","2 &lt; x &lt; 8","x &gt; 5","0 &lt; x &lt; 5","x &lt; 8"],correta:1,
+     explicacao:"Raízes de x² − 10x + 16 = 0: x = 2 e x = 8. Como a = −1 (concavidade para baixo), L &gt; 0 entre as raízes: 2 &lt; x &lt; 8."}
+  ],
+  geometria:[
+    {enunciado:"Uma escada de 5 m está apoiada em uma parede, com o pé a 3 m dela. A que altura da parede a escada toca?",
+     alternativas:["3 m","4 m","5,8 m","8 m","15 m"],correta:1,
+     explicacao:"Pitágoras: 5² = 3² + h² → h² = 25 − 9 = 16 → h = 4 m."},
+    {enunciado:"Uma piscina em formato de paralelepípedo tem 8 m de comprimento, 4 m de largura e 1,5 m de profundidade. Quantos litros cabem nela (1 m³ = 1.000 L)?",
+     alternativas:["4.800 L","13.000 L","48 L","48.000 L","480.000 L"],correta:3,
+     explicacao:"V = 8 × 4 × 1,5 = 48 m³ = 48 × 1.000 = 48.000 L."},
+    {enunciado:"Em um mapa de escala 1 : 500.000, a distância entre duas cidades é 6 cm. Qual a distância real?",
+     alternativas:["3 km","30 km","83 km","300 km","3.000 km"],correta:1,
+     explicacao:"6 × 500.000 = 3.000.000 cm = 30.000 m = 30 km."},
+    {enunciado:"Um poste de 3 m projeta sombra de 2 m no mesmo instante em que um prédio projeta sombra de 30 m. Qual a altura do prédio?",
+     alternativas:["20 m","33 m","45 m","60 m","90 m"],correta:2,
+     explicacao:"Triângulos semelhantes: h/30 = 3/2 → h = 45 m."},
+    {enunciado:"Uma sala de 5 m × 4 m será revestida com placas quadradas de 50 cm de lado. Quantas placas são necessárias, sem contar perdas?",
+     alternativas:["20","40","80","100","160"],correta:2,
+     explicacao:"Área da sala = 20 m². Cada placa: 0,5 × 0,5 = 0,25 m². Total: 20 ÷ 0,25 = 80 placas."}
+  ],
+  probabilidade:[
+    {enunciado:"Uma urna tem 3 bolas vermelhas, 5 azuis e 2 verdes. Retirando uma bola ao acaso, qual a probabilidade de ela não ser vermelha?",
+     alternativas:["30%","50%","70%","80%","20%"],correta:2,
+     explicacao:"São 10 bolas. Não vermelhas: 5 + 2 = 7 → 7/10 = 70% (ou 1 − 3/10)."},
+    {enunciado:"Dois dados comuns são lançados. Qual a probabilidade de sair pelo menos um número 6?",
+     alternativas:["1/6","11/36","1/3","25/36","5/36"],correta:1,
+     explicacao:"Complementar: nenhum 6 = 5/6 × 5/6 = 25/36. Pelo menos um 6 = 1 − 25/36 = 11/36."},
+    {enunciado:"Uma lanchonete oferece 3 tipos de pão, 4 de recheio e 2 de bebida. Quantos lanches distintos (pão + recheio + bebida) é possível montar?",
+     alternativas:["9","12","18","24","36"],correta:3,
+     explicacao:"Princípio multiplicativo: 3 × 4 × 2 = 24."},
+    {enunciado:"Os tempos de espera, em minutos, de cinco clientes foram 4, 6, 6, 10 e 14. Quais são a média e a mediana?",
+     alternativas:["Média 6 e mediana 8","Média 8 e mediana 6","Média 8 e mediana 10","Média 7 e mediana 6","Média 10 e mediana 6"],correta:1,
+     explicacao:"Média = 40 ÷ 5 = 8. Em ordem crescente, o termo central (3º) é 6, logo a mediana é 6."},
+    {enunciado:"Uma moeda honesta é lançada 3 vezes. Qual a probabilidade de saírem exatamente duas caras?",
+     alternativas:["1/8","1/4","3/8","1/2","3/4"],correta:2,
+     explicacao:"Há 2³ = 8 resultados. Com duas caras: CCK, CKC e KCC (3 casos). P = 3/8."}
+  ],
+  algebra:[
+    {enunciado:"Um produto de R$ 80,00 teve aumento de 25% e, depois, desconto de 20% sobre o novo preço. Qual o preço final?",
+     alternativas:["R$ 75,00","R$ 80,00","R$ 84,00","R$ 85,00","R$ 100,00"],correta:1,
+     explicacao:"Aumento: 80 × 1,25 = 100. Desconto: 100 × 0,80 = R$ 80,00 (os percentuais incidem sobre bases diferentes)."},
+    {enunciado:"Seis pedreiros constroem um muro em 10 dias. No mesmo ritmo, em quantos dias 4 pedreiros constroem o mesmo muro?",
+     alternativas:["7 dias","12 dias","15 dias","20 dias","25 dias"],correta:2,
+     explicacao:"Grandezas inversamente proporcionais: 4 × d = 6 × 10 → d = 60 ÷ 4 = 15 dias."},
+    {enunciado:"Na cantina, 2 sucos e 3 salgados custam R$ 21,00, e 1 suco e 2 salgados custam R$ 12,00. Quanto custa um suco?",
+     alternativas:["R$ 3,00","R$ 4,50","R$ 5,00","R$ 6,00","R$ 7,50"],correta:3,
+     explicacao:"2x + 3y = 21 e x + 2y = 12. Da 2ª: x = 12 − 2y. Então 24 − 4y + 3y = 21 → y = 3 e x = 6. Suco = R$ 6,00."},
+    {enunciado:"Um capital de R$ 2.000,00 é aplicado a juros simples de 3% ao mês durante 5 meses. Qual o montante?",
+     alternativas:["R$ 300,00","R$ 2.150,00","R$ 2.300,00","R$ 2.318,55","R$ 3.000,00"],correta:2,
+     explicacao:"J = 2000 × 0,03 × 5 = 300. Montante = 2000 + 300 = R$ 2.300,00. (R$ 2.318,55 seria com juros compostos.)"},
+    {enunciado:"A idade de um pai é o triplo da idade do filho. Daqui a 10 anos, a soma das idades dos dois será 80 anos. Qual a idade atual do filho?",
+     alternativas:["10 anos","12 anos","15 anos","18 anos","45 anos"],correta:2,
+     explicacao:"Filho x, pai 3x: (x + 10) + (3x + 10) = 80 → 4x = 60 → x = 15 anos. (45 é a idade do pai.)"}
+  ]
+};
+
+/* ===================== 2. ESTADO ===================== */
+const S = {nome:"", tema:null, i:0, resp:[]};
+let memNome = "";
+
+/* ===================== 5. UTILITÁRIOS ===================== */
+const $ = s => document.querySelector(s);
+const app = $("#app");
+const LET = "ABCDE";
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function lerNome(){ try{ return localStorage.getItem("cc_nome") || memNome; }catch(e){ return memNome; } }
+function salvarNome(n){ memNome = n; try{ localStorage.setItem("cc_nome", n); }catch(e){} }
+function tela(html, cls){ document.body.className = cls || ""; app.innerHTML = html; window.scrollTo(0,0); }
+const MASC = '<svg viewBox="0 0 120 110" width="120" height="110" aria-hidden="true"><path d="M18 42 L30 8 L48 28 L64 4 L82 28 L100 12 L104 104 H18Z" fill="#1f5cff" stroke="#111" stroke-width="4" stroke-linejoin="round"/><g fill="#fff" stroke="#111" stroke-width="3"><rect x="30" y="42" width="26" height="15" rx="7"/><rect x="66" y="42" width="26" height="15" rx="7"/></g><circle cx="46" cy="50" r="4"/><circle cx="78" cy="50" r="4"/><path d="M52 66h18" stroke="#111" stroke-width="4" stroke-linecap="round"/><path d="M64 70 L48 90 H59 L55 102 L75 80 H64Z" fill="#ff5a1f" stroke="#111" stroke-width="3" stroke-linejoin="round"/></svg>';
+
+/* ===================== 4. CALCULADORA (parser próprio, sem eval) ===================== */
+class ErroCalc extends Error {}
+const erro = m => new ErroCalc(m);
+const RAD = Math.PI / 180;
+function fat(n){
+  if(!Number.isInteger(n) || n < 0 || n > 170) throw erro("Fatorial só vale para inteiros de 0 a 170.");
+  let r = 1; for(let k = 2; k <= n; k++) r *= k; return r;
+}
+const FUNC = {
+  sen: x => Math.sin(x*RAD),
+  cos: x => Math.cos(x*RAD),
+  tan: x => { if(Math.abs(Math.cos(x*RAD)) < 1e-12) throw erro("Tangente indefinida para esse ângulo."); return Math.tan(x*RAD); },
+  log: x => { if(x <= 0) throw erro("Logaritmo só existe para números positivos."); return Math.log10(x); },
+  ln:  x => { if(x <= 0) throw erro("Logaritmo só existe para números positivos."); return Math.log(x); },
+  "√": x => { if(x < 0) throw erro("Não existe raiz quadrada real de número negativo."); return Math.sqrt(x); }
+};
+/* Descida recursiva: expr → termo → unário → potência → fatorial → primário */
+function calcular(src){
+  const T = [], re = /\s*(\d+[.,]?\d*|[.,]\d+|sen|cos|tan|log|ln|[√π+\-−×÷*\/^!()])/y;
+  src = src.trim(); let p = 0, m;
+  while(p < src.length){
+    re.lastIndex = p; m = re.exec(src);
+    if(!m) throw erro("Entrada inválida.");
+    T.push(m[1]); p = re.lastIndex;
+  }
+  let i = 0;
+  const isNum = t => t && /^[\d.,]/.test(t);
+  const fechar = () => { if(T[i] !== ")") throw erro(T[i] === undefined ? "Parênteses não fechados." : "Entrada inválida."); i++; };
+  function expr(){
+    let v = termo();
+    while(T[i] === "+" || T[i] === "−" || T[i] === "-"){ v = (T[i++] === "+") ? v + termo() : v - termo(); }
+    return v;
+  }
+  function termo(){
+    let v = un();
+    for(;;){
+      const t = T[i];
+      if(t === "×" || t === "*"){ i++; v *= un(); }
+      else if(t === "÷" || t === "/"){ i++; const d = un(); if(d === 0) throw erro("Não é possível dividir por zero."); v /= d; }
+      else if(t === "(" || t === "π" || FUNC[t]){ v *= un(); } /* multiplicação implícita: 2π, 3(4) */
+      else return v;
+    }
+  }
+  function un(){
+    if(T[i] === "−" || T[i] === "-"){ i++; return -un(); }
+    if(T[i] === "+"){ i++; return un(); }
+    return pot();
+  }
+  function pot(){ const b = pos(); if(T[i] === "^"){ i++; return Math.pow(b, un()); } return b; }
+  function pos(){ let v = prim(); while(T[i] === "!"){ i++; v = fat(v); } return v; }
+  function prim(){
+    const t = T[i++];
+    if(t === undefined) throw erro("Expressão incompleta.");
+    if(isNum(t)) return parseFloat(t.replace(",", "."));
+    if(t === "π") return Math.PI;
+    if(FUNC[t]){ if(T[i] !== "(") throw erro("Use parênteses após a função."); i++; const v = expr(); fechar(); return FUNC[t](v); }
+    if(t === "("){ const v = expr(); fechar(); return v; }
+    throw erro("Entrada inválida.");
+  }
+  const r = expr();
+  if(i < T.length) throw erro(T[i] === ")" ? "Parêntese ')' sem par." : "Entrada inválida.");
+  if(!Number.isFinite(r)) throw erro("Resultado fora do alcance.");
+  return r;
+}
+const fmt = r => String(Number((Math.abs(r) < 1e-12 ? 0 : r).toPrecision(12))).replace(".", ",");
+
+const KEYS = [["sen","sen(","f"],["cos","cos(","f"],["tan","tan(","f"],["⌫","bk","o"],["C","c","o"],
+  ["log","log(","f"],["ln","ln(","f"],["√","√(","f"],["^","^","f"],["!","!","f"],
+  ["7"],["8"],["9"],["÷","÷","o"],["(","(","f"],
+  ["4"],["5"],["6"],["×","×","o"],[")",")","f"],
+  ["1"],["2"],["3"],["−","−","o"],["π","π","f"],
+  ["0"],[","],["=","=","eq"],["+","+","o"]];
+const calcHTML = () => `<div class="card"><div class="disp" aria-live="polite"><div id="ce">0</div><div id="cr"></div></div>
+<div class="keys" id="keys">${KEYS.map(k => `<button type="button" class="${k[2]||""}" data-k="${k[1]||k[0]}">${k[0]}</button>`).join("")}</div>
+<label class="nt" for="nota">Anotações desta questão</label><textarea id="nota" placeholder="Escreva aqui seus cálculos e ideias..."></textarea></div>`;
+
+function initCalc(){
+  let ex = "";
+  const de = $("#ce"), dr = $("#cr");
+  const show = (r, bad) => { de.textContent = ex || "0"; dr.textContent = r || ""; dr.className = bad ? "bad" : ""; };
+  $("#keys").onclick = ev => {
+    const b = ev.target.closest("button"); if(!b) return;
+    const k = b.dataset.k;
+    if(k === "c") ex = "";
+    else if(k === "bk") ex = ex.replace(/([a-z]+\(|√\(|.)$/, "");
+    else if(k === "="){
+      if(!ex) return;
+      try{ show(fmt(calcular(ex))); }catch(e){ show(e instanceof ErroCalc ? e.message : "Entrada inválida.", true); }
+      return;
+    } else ex += k;
+    show("");
+  };
+}
+
+/* ===================== 3. TELAS ===================== */
+function telaLogin(){
+  tela(`<div class="c">${MASC}<h1>Conecta Código</h1><p>Revisão de Matemática para o ENEM</p></div>
+  <form id="f" class="card" novalidate><label for="n">Qual é o seu nome?</label>
+  <input id="n" maxlength="30" autocomplete="given-name" placeholder="Digite seu nome" value="${esc(lerNome())}">
+  <p class="err" id="e" role="alert"></p><button class="btn" type="submit">Entrar →</button></form>`);
+  $("#f").onsubmit = ev => {
+    ev.preventDefault();
+    const v = $("#n").value.trim();
+    if(!v){ $("#e").textContent = "Digite seu nome para entrar."; $("#n").focus(); return; }
+    S.nome = v; salvarNome(v); telaHome();
+  };
+}
+
+function telaHome(){
+  tela(`<div class="top"><h2>Olá, ${esc(S.nome)}!</h2><button class="ib" id="sair" aria-label="Sair">↩</button></div>
+  <div class="c">${MASC}<p><b>Escolha um tema</b> e resolva 5 questões</p></div>
+  <div class="card lst">${Object.keys(TEMAS).map(t => `<button class="tm" data-t="${t}"><span class="ic">${TEMAS[t].ic}</span><span><b>${TEMAS[t].nome}</b><small>${TEMAS[t].sub}</small></span><i>›</i></button>`).join("")}</div>`);
+  $("#sair").onclick = telaLogin;
+  document.querySelectorAll(".tm").forEach(b => b.onclick = () => iniciar(b.dataset.t));
+}
+
+function iniciar(t){ S.tema = t; S.i = 0; S.resp = []; telaQuestao(); }
+
+function telaQuestao(){
+  const T = TEMAS[S.tema], lista = QUESTOES[S.tema], q = lista[S.i], n = lista.length, ult = S.i === n - 1;
+  tela(`<div class="top"><button class="ib" id="vb" aria-label="Voltar para a home">←</button><h2>${T.nome}</h2><span class="cnt">${S.i+1} de ${n}</span></div>
+  <div class="bar" role="progressbar" aria-valuemin="1" aria-valuemax="${n}" aria-valuenow="${S.i+1}"><i style="width:${(S.i+1)/n*100}%"></i></div>
+  <div class="seg"><button id="tq" class="on" aria-pressed="true">Questão</button><button id="tc" aria-pressed="false">Calculadora</button></div>
+  <section id="pq" class="card"><span class="tag">Questão ${S.i+1}</span><p class="enun">${q.enunciado}</p>
+  <div class="alts">${q.alternativas.map((a,k) => `<button class="alt" data-k="${k}"><b>${LET[k]}</b><span>${a}</span></button>`).join("")}</div></section>
+  <section id="pc" hidden>${calcHTML()}</section>
+  <div class="gap"><button class="btn or" id="nx" disabled>${ult ? "Finalizar" : "Próxima"} →</button></div>`, "q");
+  $("#vb").onclick = telaHome;
+  const alts = document.querySelectorAll(".alt");
+  alts.forEach(b => b.onclick = () => {
+    S.resp[S.i] = +b.dataset.k;
+    alts.forEach(x => x.classList.toggle("on", x === b));
+    $("#nx").disabled = false;
+  });
+  const aba = q2 => {
+    $("#pq").hidden = !q2; $("#pc").hidden = q2;
+    $("#tq").classList.toggle("on", q2); $("#tc").classList.toggle("on", !q2);
+    $("#tq").setAttribute("aria-pressed", q2); $("#tc").setAttribute("aria-pressed", !q2);
+  };
+  $("#tq").onclick = () => aba(true);
+  $("#tc").onclick = () => aba(false);
+  $("#nx").onclick = () => { if(ult) telaRecap(); else { S.i++; telaQuestao(); } };
+  initCalc();
+}
+
+function telaRecap(){
+  const qs = QUESTOES[S.tema], T = TEMAS[S.tema];
+  const ac = qs.filter((q,k) => S.resp[k] === q.correta).length, er = qs.length - ac, pc = Math.round(ac / qs.length * 100);
+  tela(`<div class="top"><h2>Simulado concluído</h2></div>
+  <div class="sc"><b>${T.nome}</b><div class="ring" style="--p:${pc}"><div>${ac}/${qs.length}</div></div>
+  <div class="st"><span><b>${ac}</b>Acertos</span><span><b>${er}</b>Erros</span><span><b>${pc}%</b>Aproveitamento</span></div></div>
+  <h3>Revise as questões</h3>
+  ${qs.map((q,k) => { const u = S.resp[k], ok = u === q.correta;
+    return `<details class="${ok?"ok":""}"><summary>Questão ${k+1}<span class="v">${ok?"Acertou ✓":"Errou ✗"}</span></summary><div class="bd">
+    <p class="enun">${q.enunciado}</p>
+    <p class="a u ${ok?"ok":""}"><b>Sua resposta:</b> ${LET[u]}) ${q.alternativas[u]}</p>
+    <p class="a k"><b>Resposta correta:</b> ${LET[q.correta]}) ${q.alternativas[q.correta]}</p>
+    <p class="x"><b>Resolução:</b> ${q.explicacao}</p></div></details>`; }).join("")}
+  <div class="gap"><button class="btn or" id="rt">Tentar de novo</button><button class="btn gh" id="hm">Voltar para a home</button></div>`, "q");
+  $("#rt").onclick = () => iniciar(S.tema);
+  $("#hm").onclick = telaHome;
+}
+
+/* Início */
+telaLogin();
+</script>
+</body>
+</html>
